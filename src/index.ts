@@ -10,7 +10,7 @@ app.use(express.json());
 // Routes
 app.use("/countries", countryRoutes);
 
-const startServer = async () => {
+async function startServer() {
   try {
     await connectDB();
     app.listen(port, () => {
@@ -20,6 +20,6 @@ const startServer = async () => {
     console.error("Failed to start server:", error);
     process.exit(1);
   }
-};
+}
 
 void startServer();
