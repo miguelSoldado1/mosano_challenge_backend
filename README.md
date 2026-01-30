@@ -25,3 +25,13 @@ pnpm run dev
 - `pnpm run dev` - Start development server
 - `pnpm run build` - Build for production
 - `pnpm run seed` - Seed database with countries
+
+## Next Steps
+
+For production readiness, consider adding:
+
+- **Rate limiting** - Prevent abuse with express-rate-limit
+- **Input sanitization** - Additional sanitization beyond Zod (e.g., express-validator)
+- **Authentication** - JWT or session-based auth
+- **Logging** - Structured logging with Winston or Pino
+- **Testing** - Unit and integration tests
