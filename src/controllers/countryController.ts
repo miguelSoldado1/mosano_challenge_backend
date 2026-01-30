@@ -4,7 +4,7 @@ import { country } from "../models/country";
 
 const getCountriesSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(100).default(50),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
   orderBy: z.enum(["name", "createdAt", "updatedAt"]).default("name"),
   order: z.enum(["asc", "desc"]).default("asc"),
 });
