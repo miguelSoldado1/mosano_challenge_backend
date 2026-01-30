@@ -1,16 +1,12 @@
-import mongoose, { Schema } from "mongoose";
-import { ICountry } from "../types.js";
+import { model, Schema } from "mongoose";
+import { ICountry } from "./types";
 
 const countrySchema = new Schema<ICountry>(
   {
     name: { type: String, required: true, trim: true },
     code: { type: String, required: true, unique: true, uppercase: true, minlength: 2, maxlength: 3, trim: true },
   },
-  {
-    timestamps: true,
-    toJSON: { versionKey: false },
-    toObject: { versionKey: false },
-  },
+  { timestamps: true, versionKey: false },
 );
 
-export const Country = mongoose.model<ICountry>("Country", countrySchema);
+export const country = model<ICountry>("country", countrySchema, "country");

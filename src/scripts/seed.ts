@@ -1,5 +1,5 @@
-import connectDB from "../config/database.js";
-import { Country } from "../models/country.js";
+import connectDB from "../config/database";
+import { country } from "../models/country";
 
 interface RestCountry {
   name: { common: string };
@@ -10,7 +10,7 @@ const seedDatabase = async () => {
   try {
     await connectDB();
 
-    const existingCountries = await Country.countDocuments();
+    const existingCountries = await country.countDocuments();
     if (existingCountries > 0) {
       console.log("Database already seeded with countries");
       process.exit(0);
@@ -31,7 +31,7 @@ const seedDatabase = async () => {
       code: country.cca2,
     }));
 
-    await Country.insertMany(countriesToInsert);
+    await country.insertMany(countriesToInsert);
 
     console.log(`Database seeded successfully with ${countriesToInsert.length} countries from REST Countries API`);
 
