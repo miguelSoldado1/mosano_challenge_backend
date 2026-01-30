@@ -6,7 +6,7 @@ interface RestCountry {
   cca2: string;
 }
 
-const seedDatabase = async () => {
+async function seedDatabase() {
   try {
     await connectDB();
 
@@ -40,6 +40,6 @@ const seedDatabase = async () => {
     console.error("Error seeding database:", error);
     process.exit(1);
   }
-};
+}
 
-void seedDatabase();
+seedDatabase();
