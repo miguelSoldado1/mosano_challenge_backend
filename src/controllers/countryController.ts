@@ -1,6 +1,12 @@
+import { fromNodeHeaders } from "better-auth/node";
 import { Request, Response } from "express";
 import z from "zod";
+import { auth } from "../auth";
 import { country } from "../models/country";
+
+const countryIdSchema = z.object({
+  id: z.string(),
+});
 
 const getCountriesSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -44,5 +50,29 @@ export async function getAllCountries(req: Request, res: Response) {
   } catch (error) {
     console.error("Error fetching all countries:", error);
     res.status(500).json({ error: "Failed to fetch countries from database" });
+  }
+}
+
+export async function deleteCountry(req: Request, res: Response) {
+  try {
+    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
+    if (!session?.user) {
+      return res.status(401).json({ error: "You must be logged in to delete a user" });
+    }
+
+    const result = countryIdSchema.safeParse(req.params);
+    if (!result.success) {
+      return res.status(400).json({ error: "Invalid country ID" });
+    }
+
+    const countryDoc = await country.findByIdAndDelete(result.data.id);
+    if (!countryDoc) {
+      return res.status(404).json({ error: "Country not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting country:", error);
+    res.status(500).json({ error: "Failed to delete country" });
   }
 }
