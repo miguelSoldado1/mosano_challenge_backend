@@ -43,7 +43,7 @@ export async function getCountries(req: Request, res: Response) {
   }
 }
 
-export async function getAllCountries(req: Request, res: Response) {
+export async function getAllCountries(_req: Request, res: Response) {
   try {
     const countries = await country.find().sort({ name: 1 });
     res.json({ data: countries });
@@ -57,7 +57,7 @@ export async function deleteCountry(req: Request, res: Response) {
   try {
     const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
     if (!session?.user) {
-      return res.status(401).json({ error: "You must be logged in to delete a user" });
+      return res.status(401).json({ error: "You must be logged in to delete a country" });
     }
 
     const result = countryIdSchema.safeParse(req.params);
@@ -70,9 +70,41 @@ export async function deleteCountry(req: Request, res: Response) {
       return res.status(404).json({ error: "Country not found" });
     }
 
-    res.json({ message: "User deleted successfully" });
+    res.json({ message: "Country deleted successfully" });
   } catch (error) {
     console.error("Error deleting country:", error);
     res.status(500).json({ error: "Failed to delete country" });
+  }
+}
+
+const createCountrySchema = z.object({
+  name: z.string().min(5).max(128),
+  code: z.string().length(2),
+});
+
+export async function createCountry(req: Request, res: Response) {
+  try {
+    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
+    if (!session?.user) {
+      return res.status(401).json({ error: "You must be logged in to create a country" });
+    }
+
+    const result = createCountrySchema.safeParse(req.body);
+    if (!result.success) {
+      return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    const existingCountry = await country.findOne({ code: result.data.code });
+    if (existingCountry) {
+      return res.status(400).json({ error: "Country code already exists" });
+    }
+
+    const newCountry = new country({ name: result.data.name, code: result.data.code.toUpperCase() });
+    const savedCountry = await newCountry.save();
+
+    res.status(201).json({ message: "Country created successfully", country: savedCountry });
+  } catch (error) {
+    console.error("Error creating country:", error);
+    res.status(500).json({ error: "Failed to create country" });
   }
 }
