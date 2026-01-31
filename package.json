@@ -1,8 +1,5 @@
 {
   "name": "mosano_challenge_backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/index.ts",
