@@ -9,6 +9,10 @@ import userRoutes from "./routes/userRoutes.js";
 const app = express();
 const port = process.env.PORT || 5050;
 
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
@@ -26,7 +30,3 @@ app.use("/api/country", countryRoutes);
 app.use("/api/user", userRoutes);
 
 await connectDB();
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
