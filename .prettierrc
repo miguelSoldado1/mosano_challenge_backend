@@ -1,5 +1,5 @@
 {
   "plugins": ["@ianvs/prettier-plugin-sort-imports"],
   "printWidth": 120,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^[./]", "<TYPES>", "^(?!.*[.]css$)[./].*$", ".css$"]
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^[./]", "<TYPES>"]
 }

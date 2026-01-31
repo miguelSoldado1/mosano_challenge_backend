@@ -9,9 +9,8 @@ export interface ICountry {
 
 export interface IUser {
   name: string;
-  surname: string;
   country: Types.ObjectId;
-  birthYear: number;
+  birthday: Date;
   createdAt: Date;
   updatedAt: Date;
 }

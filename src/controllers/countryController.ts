@@ -36,3 +36,13 @@ export async function getCountries(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to fetch countries from database" });
   }
 }
+
+export async function getAllCountries(req: Request, res: Response) {
+  try {
+    const countries = await country.find().sort({ name: 1 });
+    res.json({ data: countries });
+  } catch (error) {
+    console.error("Error fetching all countries:", error);
+    res.status(500).json({ error: "Failed to fetch countries from database" });
+  }
+}

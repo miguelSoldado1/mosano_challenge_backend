@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import connectDB from "./config/database";
 import countryRoutes from "./routes/countryRoutes";
@@ -7,10 +8,11 @@ const app = express();
 const port = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
 
 // Routes
-app.use("/countries", countryRoutes);
-app.use("/users", userRoutes);
+app.use("/api/country", countryRoutes);
+app.use("/api/user", userRoutes);
 
 async function startServer() {
   try {

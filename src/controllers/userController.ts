@@ -9,9 +9,11 @@ const userIdSchema = z.object({
 
 const createUserSchema = z.object({
   name: z.string().min(1).max(100).trim(),
-  surname: z.string().min(1).max(100).trim(),
   country: z.string().min(2).max(3).toUpperCase(),
-  birthYear: z.number().int().min(1900).max(new Date().getFullYear()),
+  birthday: z
+    .string()
+    .datetime()
+    .transform((str) => new Date(str)),
 });
 
 export async function createUser(req: Request, res: Response) {
@@ -39,7 +41,7 @@ export async function createUser(req: Request, res: Response) {
 const getUsersSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
-  orderBy: z.enum(["name", "surname", "createdAt", "updatedAt", "birthYear"]).default("createdAt"),
+  orderBy: z.enum(["name", "createdAt", "updatedAt", "birthday"]).default("createdAt"),
   order: z.enum(["asc", "desc"]).default("desc"),
 });
 

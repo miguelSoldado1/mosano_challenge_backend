@@ -26,14 +26,17 @@ async function seedDatabase() {
 
     const countriesData = (await response.json()) as RestCountry[];
 
-    const countriesToInsert = countriesData.map((country) => ({
+    // Shuffle the array and take the first 100 countries
+    const shuffledCountries = countriesData.sort(() => Math.random() - 0.5).slice(0, 100);
+
+    const countriesToInsert = shuffledCountries.map((country) => ({
       name: country.name.common,
       code: country.cca2,
     }));
 
     await country.insertMany(countriesToInsert);
 
-    console.log(`Database seeded successfully with ${countriesToInsert.length} countries from REST Countries API`);
+    console.log(`Database seeded successfully with 100 random countries from REST Countries API`);
 
     process.exit(0);
   } catch (error) {
