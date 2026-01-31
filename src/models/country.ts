@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ICountry } from "./types";
+import type { ICountry } from "./types.js";
 
 const countrySchema = new Schema<ICountry>(
   {

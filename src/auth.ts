@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const auth = betterAuth({
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: [process.env.FRONTEND_URL as string],
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,

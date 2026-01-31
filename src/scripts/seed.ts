@@ -1,5 +1,5 @@
-import connectDB from "../config/database";
-import { country } from "../models/country";
+import connectDB from "../config/database.js";
+import { country } from "../models/country.js";
 
 interface RestCountry {
   name: { common: string };

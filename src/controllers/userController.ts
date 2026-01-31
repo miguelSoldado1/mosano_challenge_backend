@@ -1,9 +1,9 @@
 import { fromNodeHeaders } from "better-auth/node";
 import { Request, Response } from "express";
 import z from "zod";
-import { auth } from "../auth";
-import { country } from "../models/country";
-import { user } from "../models/user";
+import { auth } from "../auth.js";
+import { country } from "../models/country.js";
+import { user } from "../models/user.js";
 
 const userIdSchema = z.object({
   id: z.string(),
