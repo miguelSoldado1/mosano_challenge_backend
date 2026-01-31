@@ -1,5 +1,7 @@
+import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
+import { auth } from "./auth";
 import connectDB from "./config/database";
 import countryRoutes from "./routes/countryRoutes";
 import userRoutes from "./routes/userRoutes";
@@ -7,8 +9,17 @@ import userRoutes from "./routes/userRoutes";
 const app = express();
 const port = process.env.PORT || 5050;
 
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
 
 // Routes
 app.use("/api/country", countryRoutes);
