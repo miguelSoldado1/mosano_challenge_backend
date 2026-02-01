@@ -32,6 +32,6 @@ For production readiness, consider adding:
 
 - **Rate limiting** - Prevent abuse with express-rate-limit
 - **Input sanitization** - Additional sanitization beyond Zod (e.g., express-validator)
-- **Authentication** - JWT or session-based auth
+- **Authentication** - Add stateful session management with MongoDB
 - **Logging** - Structured logging with Winston or Pino
 - **Testing** - Unit and integration tests
