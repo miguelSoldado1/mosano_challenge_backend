@@ -18,9 +18,10 @@ export const auth = betterAuth({
   advanced: {
     // this should only be used for educational purposes to allow for cross-site cookies,
     // in real world scenarios we should use a subdomain for the api
-    crossSubDomainCookies: {
-      enabled: true,
-      domain: process.env.FRONTEND_URL as string,
+    defaultCookieAttributes: {
+      sameSite: "none",
+      httpOnly: true,
+      secure: false,
     },
   },
 });
