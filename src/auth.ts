@@ -15,4 +15,12 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  advanced: {
+    // this should only be used for educational purposes to allow for cross-site cookies
+    defaultCookieAttributes: {
+      sameSite: "none",
+      httpOnly: true,
+      secure: false,
+    },
+  },
 });
